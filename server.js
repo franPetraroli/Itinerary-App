@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
+
 require('dotenv').config({ path: './variables.env' });
+
 const Itinerary = require('./models/Itinerary')
 const User = require('./models/User')
 const cors = require('cors')

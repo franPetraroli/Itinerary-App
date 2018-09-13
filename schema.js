@@ -57,6 +57,10 @@ exports.typeDefs = `
     wishList:[Itinerary]
   }
 
+  type Token {
+    token: String!
+  }
+
 
   type Query {
     getAllItineraries:[Itinerary]
@@ -74,5 +78,7 @@ exports.typeDefs = `
       comments: [CommentInput],
       user: String
     ): Itinerary
+
+    signupUser(username: String!, email: String!, password: String!): Token
   }
 `
