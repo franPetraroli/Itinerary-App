@@ -64,6 +64,7 @@ exports.typeDefs = `
 
   type Query {
     getAllItineraries:[Itinerary]
+    getCurrentUser: User
   }
 
   type Mutation {
@@ -79,6 +80,7 @@ exports.typeDefs = `
       user: String
     ): Itinerary
 
+    signinUser(username: String!, password: String!): Token
     signupUser(username: String!, email: String!, password: String!): Token
   }
-`
+`;
