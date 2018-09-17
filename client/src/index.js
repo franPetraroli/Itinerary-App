@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import './index.css';
 import App from './components/App';
 import Signin from './components/Auth/Signin';
 import Signup from './components/Auth/Signup';
+import Search from './components/Search';
+import Create from './components/Admin/Create';
+import MyItineraries from './components/Admin/MyItineraries';
+import MyNetwork from './components/Admin/MyNetwork';
+import Profile from './components/Admin/Profile';
+import Settings from './components/Admin/Settings';
+import ItineraryDetails from './components/Layout/ItineraryDetails';
 import WithSession from './components/WithSession';
+import NavBar from './components/Nav/NavBar';
 
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
@@ -30,14 +38,24 @@ const client = new ApolloClient({
   }
 });
 
-const Root = () => (
+const Root = ({ refetch, session }) => (
   <Router>
-    <Switch>
-      <Route path="/" exact component={App} />
-      <Route path="/signin" component={Signin} />
-      <Route path="/signup" component={Signup} />
-      <Redirect to="/" />
-    </Switch>
+    <Fragment>
+      <NavBar session={session} refetch={refetch} />
+      <Switch>
+        <Route path="/" exact component={App} />
+        <Route path="/search" component={Search} />
+        <Route path="/create" render={() => <Create session={session} />} />
+        <Route path="/itinerary/:_id" component={ItineraryDetails} />
+        <Route path="/myitineraries" component={MyItineraries} />
+        <Route path="/mynetwork" component={MyNetwork} />
+        <Route path="/profile" component={Profile} />
+        <Route path="/settings" component={Settings} />
+        <Route path="/signin" render={() => <Signin refetch={refetch} />} />
+        <Route path="/signup" render={() => <Signup refetch={refetch} />} />
+        <Redirect to="/" />
+      </Switch>
+    </Fragment>
   </Router>
 );
 

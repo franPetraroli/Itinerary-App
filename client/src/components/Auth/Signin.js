@@ -3,6 +3,7 @@ import { Input, Form, Segment, Button, Header, Grid, Container } from 'semantic-
 import { Mutation } from 'react-apollo';
 import { SIGNIN_USER } from '../../queries';
 import Error from '../Error';
+import { withRouter } from 'react-router-dom';
 
 const initialState = {
   username: '',
@@ -24,11 +25,21 @@ class Signin extends Component {
   handleSubmit = (event, signinUser) => {
     event.preventDefault();
 
-    signinUser().then(({ data }) => {
+    signinUser().then(async ({ data }) => {
       console.log(data);
+
       localStorage.setItem('token', data.signinUser.token);
+      await this.props.refetch;
       this.clearState();
+      this.props.history.push('/');
     });
+  };
+
+  validateForm = () => {
+    const { username, password } = this.state;
+    const isInvalid = !username || !password;
+
+    return isInvalid;
   };
 
   render() {
@@ -66,7 +77,7 @@ class Signin extends Component {
                         style={{ width: '370px', margin: '0 auto' }}
                       />
                     </Form.Field>
-                    <Button positive type="submit">
+                    <Button positive type="submit" disabled={loading || this.validateForm()}>
                       Signin
                     </Button>
                     {error && <Error error={error} />}
@@ -81,4 +92,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default withRouter(Signin);

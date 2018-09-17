@@ -8,7 +8,7 @@ const Location = new Schema({
     required: true
   },
   country: {
-    type: String,
+    type: String
   },
   region: {
     type: String
@@ -30,9 +30,9 @@ const Comment = new Schema({
     type: String
   },
   user: {
-    type: String,
-  },
-})
+    type: String
+  }
+});
 
 const ItinerarySchema = new Schema({
   name: {
@@ -55,7 +55,7 @@ const ItinerarySchema = new Schema({
     type: [Location],
     required: true
   },
-  description:{
+  description: {
     type: String
   },
   likes: {
@@ -65,9 +65,13 @@ const ItinerarySchema = new Schema({
   comments: {
     type: [Comment]
   },
-  user:{
+  user: {
     type: String
   }
-})
+});
 
-module.exports = mongoose.model('Itinerary', ItinerarySchema)
+ItinerarySchema.index({
+  '$**': 'text'
+});
+
+module.exports = mongoose.model('Itinerary', ItinerarySchema);

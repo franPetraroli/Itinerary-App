@@ -10,7 +10,26 @@ const createToken = (user, secret, expiresIn) => {
 exports.resolvers = {
   Query: {
     getAllItineraries: async (root, args, { Itinerary }) => {
-      return await Itinerary.find();
+      return await Itinerary.find().sort({ date: 'desc' });
+    },
+    getItinerary: async (root, { _id }, { Itinerary }) => {
+      const itinerary = await Itinerary.findOne({ _id });
+      return itinerary;
+    },
+    searchItineraries: async (root, { searchTerm }, { Itinerary }) => {
+      if (searchTerm) {
+        const searchResult = await Itinerary.find(
+          {
+            $text: { $searchTerm }
+          },
+          {
+            score: { $meta: 'textScore' }
+          }
+        );
+      } else {
+        const itineraries = await Itinerary.find().sort({ likes: 'desc', date: 'desc' });
+        return itineraries;
+      }
     },
     getCurrentUser: async (root, args, { currentUser, User }) => {
       if (!currentUser) return null;
@@ -24,7 +43,11 @@ exports.resolvers = {
   },
 
   Mutation: {
-    addItinerary: async (root, { name, duration, category, date, itinerary, likes, comments, user }, { Itinerary }) => {
+    addItinerary: async (
+      root,
+      { name, duration, category, date, itinerary, likes, comments, user },
+      { Itinerary }
+    ) => {
       const newItinerary = await new Itinerary({
         name,
         duration,

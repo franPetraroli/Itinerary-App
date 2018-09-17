@@ -27,29 +27,32 @@ exports.typeDefs = `
     user: String
   }
   type Itinerary {
+    _id: ID
     name: String!
     duration: Int!
     category: String!
     description: String
     date: String
-    itinerary: [Location]!
+    itinerary: [Location]
     likes: Int
     comments: [Comment]
     user: String
   }
   input ItineraryInput {
+    _id: ID
     name: String!
     duration: Int!
     category: String!
     description: String
     date: String
-    itinerary: [LocationInput]!
+    itinerary: [LocationInput]
     likes: Int
     comments: [CommentInput]
     user: String
   }
   
   type User {
+    _id: ID
     username: String! @unique
     email: String! @unique
     password: String!
@@ -65,6 +68,8 @@ exports.typeDefs = `
   type Query {
     getAllItineraries:[Itinerary]
     getCurrentUser: User
+    getItinerary(_id: ID!): Itinerary
+    searchItineraries(searchTerm: String): [Itinerary]
   }
 
   type Mutation {
@@ -74,7 +79,7 @@ exports.typeDefs = `
       category: String!,
       description: String,
       date: String,
-      itinerary: [LocationInput]!,
+      itinerary: [LocationInput],
       likes: Int,
       comments: [CommentInput],
       user: String
