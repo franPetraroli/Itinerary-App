@@ -18,16 +18,23 @@ exports.resolvers = {
     },
     searchItineraries: async (root, { searchTerm }, { Itinerary }) => {
       if (searchTerm) {
-        const searchResult = await Itinerary.find(
+        const searchResults = await Itinerary.find(
           {
             $text: { $searchTerm }
           },
           {
             score: { $meta: 'textScore' }
           }
-        );
+        ).sort({
+          score: { $meta: 'textScore' }
+        });
+
+        return searchResults;
       } else {
-        const itineraries = await Itinerary.find().sort({ likes: 'desc', date: 'desc' });
+        const itineraries = await Itinerary.find().sort({
+          likes: 'desc',
+          date: 'desc'
+        });
         return itineraries;
       }
     },

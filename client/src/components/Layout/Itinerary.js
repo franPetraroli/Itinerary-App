@@ -31,7 +31,7 @@ const Itinerary = ({ itinerary }) => {
         <Button
           as={Link}
           to={`/itinerary/${itinerary._id}`}
-          color="teal"
+          color="blue"
           floated="right"
           content="View"
         />

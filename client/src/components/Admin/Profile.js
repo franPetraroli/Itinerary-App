@@ -1,9 +1,18 @@
 import React from 'react';
 
-const Profile = () => {
+const Profile = ({ session }) => {
   return (
     <div>
-      <h1>Profile</h1>
+      <h1>{session.getCurrentUser.username}</h1>
+      <p>{session.getCurrentUser.email}</p>
+      <p>{session.getCurrentUser.joinDate}</p>
+
+      <ul>
+        <h3>My Itineraries</h3>
+        {session.getCurrentUser.wishList.map(item => {
+          <li key={item._id} />;
+        })}
+      </ul>
     </div>
   );
 };

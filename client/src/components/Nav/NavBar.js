@@ -28,7 +28,7 @@ const NavbarUnAuth = () => (
 const NavbarAuth = ({ session }) => (
   <Menu fixed="top">
     <Container>
-      <Menu.Item header as={NavLink} to="/">
+      <Menu.Item inverted header as={NavLink} to="/">
         {/* <img src="assets/logo.png" alt="logo" /> */}
         Itinerary App
       </Menu.Item>
@@ -37,7 +37,7 @@ const NavbarAuth = ({ session }) => (
         <h4>Welcome, {session.getCurrentUser.username}</h4>
       </Menu.Item>
       <Menu.Item position="right">
-        <Image avatar spaced="right" src="#" />
+        <Image avatar spaced="right" src="/user.png" />
         <Dropdown pointing="top left" text="Account">
           <Dropdown.Menu>
             <Dropdown.Item as={Link} to="/create" text="Create Itinerary" icon="plus" />

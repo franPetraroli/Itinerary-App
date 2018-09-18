@@ -49,7 +49,7 @@ const Root = ({ refetch, session }) => (
         <Route path="/itinerary/:_id" component={ItineraryDetails} />
         <Route path="/myitineraries" component={MyItineraries} />
         <Route path="/mynetwork" component={MyNetwork} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile" render={() => <Profile session={session} />} />
         <Route path="/settings" component={Settings} />
         <Route path="/signin" render={() => <Signin refetch={refetch} />} />
         <Route path="/signup" render={() => <Signup refetch={refetch} />} />

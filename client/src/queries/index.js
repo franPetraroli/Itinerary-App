@@ -105,6 +105,10 @@ export const GET_CURRENT_USER = gql`
       username
       joinDate
       email
+      wishList {
+        _id
+        name
+      }
     }
   }
 `;
